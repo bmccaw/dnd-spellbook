@@ -1,30 +1,30 @@
 import fetch from 'isomorphic-unfetch';
 import Hero from '../components/Hero';
-// import Nav from '../components/Navbar';
+import Link from 'next/link';
+import Layout from '../components/Layout';
+import SpellTable from '../components/SpellTable';
 
-const Index = (props) => (
-	<div>
-	  {/* <Nav /> */}
-	  <Hero /> 
-	  <ul>
-		  {props.results.map(spell => (
-			  <li>
-				  {spell.name}
-			  </li>
-		  ))}
-	  </ul>
-	</div>
-  );
+const Index = ({data}) => (
+  <Layout>
+    <Hero />
+    <SpellTable />
+    <ul>
+      {data.map(spell => (
+        <li key={spell._id}>{spell.name}</li>
+      ))}
+    </ul>
+  </Layout>
+);
 
-  Index.getInitialProps = async () => {
-	  const res = await fetch ('http://dnd5eapi.co/api/spells/');
-	  const data = await res.json();
-	  
-	  console.log(`Showing data fetched. Count: ${data.count}`);
+Index.getInitialProps = async () => {
+  const res = await fetch("https://dnd-spell-api.herokuapp.com/spells/");
+  const data = await res.json();
 
-	  return {
-		  results: data.results
-	  };
+  console.log(`Showing data fetched. Count: ${data.length}`);
+
+  return {
+    data: data
   };
-  
-  export default Index;
+};
+
+export default Index;

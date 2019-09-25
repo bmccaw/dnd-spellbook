@@ -1,27 +1,34 @@
 import React from 'react';
+import AppBar from '@material-ui/core/AppBar'
+import ToolBar from '@material-ui/core/ToolBar'
+import Typography from '@material-ui/core/Typography'
 import Styled from 'styled-components';
 
 const Nav = (props) => (
-    <NavBar>
-        <h1>D&D Spellbook</h1>
-        <h3>{props.navmessage}</h3>
-        <h1>Score: {props.score} | Top Score: {props.topscore}</h1>
-    </NavBar>
+    <div>
+        <AppBar position="fixed" color="primary">
+            <ToolBar>
+                <Typography variant="title" color="inherit">
+                    D & D Spellfinder
+                </Typography>
+            </ToolBar>
+        </AppBar>
+    </div>
 );
 
 export default Nav;
 
 
-const NavBar = Styled.div`
-    width: 100%;
-    position:sticky;
-    top:0;
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    background-color: rgba(255, 255, 255, 0.3);
-    box-shadow:0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22);
-    color:white;
-    margin-bottom: 0;
-    font-family: 'Uncial Antiqua', cursive;
-`
+// const NavBar = Styled.div`
+//     width: 100%;
+//     position:sticky;
+//     top:0;
+//     display:grid;
+//     grid-template-columns: 1fr 1fr 1fr;
+//     justify-items: center;
+//     background-color: white;
+//     box-shadow:0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22);
+//     color:black;
+//     margin-bottom: 0;
+//     font-family: 'Uncial Antiqua', cursive;
+// `
