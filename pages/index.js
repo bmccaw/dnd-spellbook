@@ -7,12 +7,7 @@ import SpellTable from '../components/SpellTable';
 const Index = ({data}) => (
   <Layout>
     <Hero />
-    <SpellTable />
-    <ul>
-      {data.map(spell => (
-        <li key={spell._id}>{spell.name}</li>
-      ))}
-    </ul>
+    <SpellTable rows={data}/>
   </Layout>
 );
 

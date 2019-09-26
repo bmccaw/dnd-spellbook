@@ -9,7 +9,7 @@ const Nav = (props) => (
         <AppBar position="fixed" color="primary">
             <ToolBar>
                 <Typography variant="title" color="inherit">
-                    D & D Spellfinder
+                    Dungeons & Dragons Spellbook
                 </Typography>
             </ToolBar>
         </AppBar>
@@ -17,7 +17,6 @@ const Nav = (props) => (
 );
 
 export default Nav;
-
 
 // const NavBar = Styled.div`
 //     width: 100%;
