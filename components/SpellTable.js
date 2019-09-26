@@ -319,8 +319,8 @@ export default function EnhancedTable(props) {
                       <TableCell align="right">{row.level}</TableCell>
                       <TableCell align="right">{row.school}</TableCell>
                       <TableCell align="right">{row.casting_time}</TableCell>
-                      <TableCell align="right">{row.ritual}</TableCell>
-					  <TableCell align="right">{row.concentration}</TableCell>
+                      <TableCell align="right">{row.ritual ? 'Yes' : 'No'}</TableCell>
+					  <TableCell align="right">{row.concentration ? 'Yes' : 'No'}</TableCell>
                       <TableCell align="right">{row.source}</TableCell>
                     </TableRow>
                   );
