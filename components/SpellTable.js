@@ -185,11 +185,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EnhancedTable(props) {
+export default function EnhancedTable({data}) {
+
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('name');
   const [selected, setSelected] = React.useState([]);
+  const [rows, setRows] = React.useState(data);
 
   const handleRequestSort = (event, property) => {
     const isDesc = orderBy === property && order === 'desc';
@@ -199,7 +201,7 @@ export default function EnhancedTable(props) {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = props.rows.map(n => n.name);
+      const newSelecteds = rows.map(n => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -244,10 +246,10 @@ export default function EnhancedTable(props) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={props.rows.length}
+              rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(props.rows, getSorting(order, orderBy))
+              {stableSort(rows, getSorting(order, orderBy))
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;

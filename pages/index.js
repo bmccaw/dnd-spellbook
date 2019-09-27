@@ -5,9 +5,10 @@ import Layout from '../components/Layout';
 import SpellTable from '../components/SpellTable';
 
 const Index = ({data}) => (
+  
   <Layout>
     <Hero />
-    <SpellTable rows={data}/>
+    <SpellTable data={data}/>
     <style global jsx>{`
         body {
           margin: 0;
