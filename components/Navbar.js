@@ -4,11 +4,11 @@ import ToolBar from '@material-ui/core/ToolBar'
 import Typography from '@material-ui/core/Typography'
 import Styled from 'styled-components';
 
-const Nav = (props) => (
+const Nav = () => (
     <div>
-        <AppBar position="fixed" color="primary">
+        <AppBar position="fixed" color="secondary">
             <ToolBar>
-                <Typography variant="title" color="inherit">
+                <Typography variant="h4" color="inherit">
                     Dungeons & Dragons Spellbook
                 </Typography>
             </ToolBar>

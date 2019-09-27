@@ -13,7 +13,7 @@ const HeroDiv = Styled.div`
         background-image: url(/static/images/hero.jpg);
         background-attachment: fixed;
         background-position: center bottom;
-        min-height:400px;
+        min-height:500px;
         display: flex;
         justify-content: center;
         flex-direction: column;
