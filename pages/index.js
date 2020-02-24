@@ -1,25 +1,23 @@
-import fetch from 'isomorphic-unfetch';
-import Hero from '../components/Hero';
-import Link from 'next/link';
-import Layout from '../components/Layout';
-import SpellTable from '../components/SpellTable';
+import fetch from "isomorphic-unfetch";
+import Hero from "../components/Hero";
+import Layout from "../components/Layout";
+import SpellTable from "../components/SpellTable";
 
-const Index = ({data}) => (
-  
+const Index = ({ data }) => (
   <Layout>
     <Hero />
-    <SpellTable data={data}/>
+    <SpellTable data={data} />
     <style global jsx>{`
-        body {
-          margin: 0;
-        }
-      `}</style>
+      body {
+        margin: 0;
+      }
+    `}</style>
   </Layout>
 );
 
 Index.getInitialProps = async () => {
-  const res = await fetch("https://dnd-spell-api.herokuapp.com/spells/");
-  const data = await res.json(); 
+  const res = await fetch(`https://dnd-spell-api.herokuapp.com/spells/`);
+  const data = await res.json();
 
   console.log(`Showing data fetched. Count: ${data.length}`);
 
