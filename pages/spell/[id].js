@@ -31,12 +31,17 @@ const Spell = ({ spell }) => {
 
   return (
     <Layout>
-      <Hero />
       <h1>{name}</h1>
-      <div>{parse(desc)}</div>
-      {higher_level && <p>{higher_level}</p>}
+      <p>
+        {level}th-level {school}
+        {ritual ? " (Ritual)" : ""}
+      </p>
+      <p>{parse(desc)}</p>
+      {higher_level && <p>{parse(higher_level)}</p>}
+      <p>Casting Time: {casting_time}</p>
       <p>Range: {range}</p>
-      <p>Ritual: {ritual ? "Yes" : "No"}</p>
+      <p>Components: {component_desc}</p>
+      <p>{ritual ? "(Ritual)" : ""}</p>
       <p>Duration: {duration}</p>
       <p>Concentration: {concentration ? "Yes" : "No"}</p>
     </Layout>

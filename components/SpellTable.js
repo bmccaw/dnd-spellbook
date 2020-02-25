@@ -297,7 +297,7 @@ export default function EnhancedTable({ data }) {
                         scope="row"
                         padding="none"
                       >
-                        <Link href={`/spell/{[id]}`} as={`spell/${rows._id}`}>
+                        <Link href={`/spell/{[id]}`} as={`spell/${row._id}`}>
                           <a target="_blank">{row.name}</a>
                         </Link>
                       </TableCell>
