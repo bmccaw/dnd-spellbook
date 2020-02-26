@@ -15,35 +15,46 @@ const Spell = ({ spell }) => {
     duration,
     concentration,
     casting_time,
-    level,
     school,
     level_desc,
-    range_desc,
     component_desc,
-    verbal,
-    material,
-    somatic,
     material_desc,
-    material_cost,
     source,
     page
   } = spell;
+
+  const bookLocation = source + ` ` + page;
 
   return (
     <Layout>
       <h1>{name}</h1>
       <p>
-        {level}th-level {school}
-        {ritual ? " (Ritual)" : ""}
+        <i>
+          {level_desc} {school}
+          {ritual ? " (Ritual)" : ""}
+        </i>
       </p>
-      <p>{parse(desc)}</p>
-      {higher_level && <p>{parse(higher_level)}</p>}
-      <p>Casting Time: {casting_time}</p>
-      <p>Range: {range}</p>
-      <p>Components: {component_desc}</p>
-      <p>{ritual ? "(Ritual)" : ""}</p>
-      <p>Duration: {duration}</p>
-      <p>Concentration: {concentration ? "Yes" : "No"}</p>
+      <p>
+        <b>Casting Time:</b> {casting_time}
+      </p>
+      <p>
+        <b>Range:</b> {range}
+      </p>
+      <p>
+        <b>Components:</b> {component_desc}
+        {material_desc ? ` (${material_desc})` : ""}
+      </p>
+      <p>
+        <b>Duration:</b> {duration}
+      </p>
+      <div>{parse(desc)}</div>
+      {higher_level && (
+        <div>
+          <b>At Higher Levels: </b>
+          {parse(higher_level)}
+        </div>
+      )}
+      <p>{bookLocation}</p>
     </Layout>
   );
 };

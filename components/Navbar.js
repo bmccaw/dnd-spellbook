@@ -1,19 +1,19 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar'
-import ToolBar from '@material-ui/core/ToolBar'
-import Typography from '@material-ui/core/Typography'
-import Styled from 'styled-components';
+import React from "react";
+import AppBar from "@material-ui/core/AppBar";
+import ToolBar from "@material-ui/core/ToolBar";
+import Typography from "@material-ui/core/Typography";
+import Styled from "styled-components";
 
 const Nav = () => (
-    <div>
-        <AppBar position="fixed" color="secondary">
-            <ToolBar>
-                <Typography variant="h4" color="inherit">
-                    Dungeons & Dragons Spellbook
-                </Typography>
-            </ToolBar>
-        </AppBar>
-    </div>
+  <div>
+    <AppBar position="sticky" color="secondary">
+      <ToolBar>
+        <Typography variant="h4" color="inherit">
+          Dungeons & Dragons Spellbook
+        </Typography>
+      </ToolBar>
+    </AppBar>
+  </div>
 );
 
 export default Nav;
