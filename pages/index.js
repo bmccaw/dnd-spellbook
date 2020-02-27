@@ -7,11 +7,6 @@ const Index = ({ data }) => (
   <Layout>
     <Hero />
     <SpellTable data={data} />
-    <style global jsx>{`
-      body {
-        margin: 0;
-      }
-    `}</style>
   </Layout>
 );
 

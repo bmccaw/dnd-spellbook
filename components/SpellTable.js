@@ -217,6 +217,7 @@ export default function EnhancedTable({ data }) {
   const [expanded, setExpanded] = React.useState(false);
 
   console.log(`ID:`, rows[0]._id);
+  console.log(selected);
 
   const handleRequestSort = (event, property) => {
     const isDesc = orderBy === property && order === "desc";

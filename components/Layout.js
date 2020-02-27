@@ -12,5 +12,5 @@ const Layout = props => (
 export default Layout;
 
 const PageLayout = Styled.div`
-	margin-top:0;
+	margin:0;
 `;

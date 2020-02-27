@@ -2,6 +2,7 @@ import fetch from "isomorphic-unfetch";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
 import parse from "html-react-parser";
+import { Container } from "@material-ui/core";
 
 const Spell = ({ spell }) => {
   console.log(spell);
@@ -27,34 +28,36 @@ const Spell = ({ spell }) => {
 
   return (
     <Layout>
-      <h1>{name}</h1>
-      <p>
-        <i>
-          {level_desc} {school}
-          {ritual ? " (Ritual)" : ""}
-        </i>
-      </p>
-      <p>
-        <b>Casting Time:</b> {casting_time}
-      </p>
-      <p>
-        <b>Range:</b> {range}
-      </p>
-      <p>
-        <b>Components:</b> {component_desc}
-        {material_desc ? ` (${material_desc})` : ""}
-      </p>
-      <p>
-        <b>Duration:</b> {duration}
-      </p>
-      <div>{parse(desc)}</div>
-      {higher_level && (
-        <div>
-          <b>At Higher Levels: </b>
-          {parse(higher_level)}
-        </div>
-      )}
-      <p>{bookLocation}</p>
+      <Container maxWidth="md">
+        <h1>{name}</h1>
+        <p>
+          <i>
+            {level_desc} {school}
+            {ritual ? " (Ritual)" : ""}
+          </i>
+        </p>
+        <p>
+          <b>Casting Time:</b> {casting_time}
+        </p>
+        <p>
+          <b>Range:</b> {range}
+        </p>
+        <p>
+          <b>Components:</b> {component_desc}
+          {material_desc ? ` (${material_desc})` : ""}
+        </p>
+        <p>
+          <b>Duration:</b> {duration}
+        </p>
+        <div>{parse(desc)}</div>
+        {higher_level && (
+          <div>
+            <b>At Higher Levels: </b>
+            {parse(higher_level)}
+          </div>
+        )}
+        <p>{bookLocation}</p>
+      </Container>
     </Layout>
   );
 };
