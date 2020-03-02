@@ -2,10 +2,16 @@ import fetch from "isomorphic-unfetch";
 import Hero from "../components/Hero";
 import Layout from "../components/Layout";
 import SpellTable from "../components/SpellTable";
+import Nav from "../components/Navbar";
 
 const Index = ({ data }) => (
   <Layout>
-    <Hero />
+    <Nav title="Dungeons and Dragons Spellbook" />
+    <Hero
+      title={"Dungeons and Dragons Spellbook"}
+      subtitle={"The place for all your D&D 5th Edition spell needs!"}
+      image={"/static/images/hero.jpg"}
+    />
     <SpellTable data={data} />
   </Layout>
 );

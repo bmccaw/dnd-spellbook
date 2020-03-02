@@ -1,13 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
-import Nav from "../components/Navbar";
 
-const Layout = props => (
-  <PageLayout>
-    <Nav />
-    {props.children}
-  </PageLayout>
-);
+const Layout = props => <PageLayout>{props.children}</PageLayout>;
 
 export default Layout;
 

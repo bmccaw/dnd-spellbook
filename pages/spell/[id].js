@@ -1,6 +1,7 @@
 import fetch from "isomorphic-unfetch";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
+import Nav from "../../components/Navbar";
 import parse from "html-react-parser";
 import { Container } from "@material-ui/core";
 
@@ -28,6 +29,7 @@ const Spell = ({ spell }) => {
 
   return (
     <Layout>
+      <Nav title="Dungeons and Dragons Spellbook" />
       <Container maxWidth="md">
         <h1>{name}</h1>
         <p>

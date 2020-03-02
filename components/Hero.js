@@ -1,16 +1,16 @@
-import React from 'react';
-import Styled from 'styled-components';
+import React from "react";
+import Styled from "styled-components";
 
-const Hero = () => (
-    <HeroDiv>
-        <h1>D&D Spellbook</h1>
-        <h3>The place for all your D&D 5th Edition spell needs!</h3>
-    </HeroDiv>
+const Hero = ({ title, subtitle, image }) => (
+  <HeroDiv image={image}>
+    <h1>{title}</h1>
+    <h3>{subtitle}</h3>
+  </HeroDiv>
 );
 export default Hero;
 
 const HeroDiv = Styled.div`
-        background-image: url(/static/images/hero.jpg);
+        background-image: ${props => `url(${props.image})`};
         background-attachment: fixed;
         background-position: center bottom;
         min-height:500px;

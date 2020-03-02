@@ -85,7 +85,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all desserts" }}
+            inputProps={{ "aria-label": "select all spells" }}
           />
         </TableCell>
         {headCells.map(headCell => (
@@ -163,7 +163,7 @@ const EnhancedTableToolbar = props => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subtitle1">
-            {numSelected} Spell selected
+            {numSelected} Spell Selected
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
