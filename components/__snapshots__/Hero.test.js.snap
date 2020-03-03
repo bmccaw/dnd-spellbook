@@ -6,21 +6,27 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="NavBar-nxwmm2-0 ktPYfa"
+        class="Hero__HeroDiv-sc-1h7uuyd-0 euZFrX"
       >
         <h1>
-          Dungeons and Dragons Spellbook
+          D&D Spellbook
         </h1>
+        <h3>
+          This is a subtitle.
+        </h3>
       </div>
     </div>
   </body>,
   "container": <div>
     <div
-      class="NavBar-nxwmm2-0 ktPYfa"
+      class="Hero__HeroDiv-sc-1h7uuyd-0 euZFrX"
     >
       <h1>
-        Dungeons and Dragons Spellbook
+        D&D Spellbook
       </h1>
+      <h3>
+        This is a subtitle.
+      </h3>
     </div>
   </div>,
   "debug": [Function],
