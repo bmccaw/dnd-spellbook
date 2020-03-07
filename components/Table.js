@@ -40,7 +40,8 @@ const Table = ({ columns, data }) => {
       data,
       initialState: {
         sortBy: [{ id: "name", desc: false }]
-      }
+      },
+      disableSortRemove: true
     },
     useSortBy
   );
@@ -53,10 +54,10 @@ const Table = ({ columns, data }) => {
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render("Header")}
-                <span>
-                  {/* Replace 'v's' with real icons */}
-                  {column.isSorted ? (column.isSortedDesc ? " v" : " ^") : ""}
-                </span>
+                {/* <span> */}
+                {/* Replace 'v's' with real icons */}
+                {/* {column.isSorted ? (column.isSortedDesc ? " v" : " ^") : ""} */}
+                {/* </span> */}
               </th>
             ))}
           </tr>
@@ -99,11 +100,11 @@ const App = ({ tableData }) => {
     },
     {
       Header: "Ritual",
-      accessor: "ritual"
+      accessor: a => (a.ritual == true ? "Yes" : "No")
     },
     {
       Header: "Concentration",
-      accessor: "concentration"
+      accessor: a => (a.concentration == true ? "Yes" : "No")
     },
     {
       Header: "Source",
