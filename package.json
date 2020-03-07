@@ -12,7 +12,7 @@
     "test:coverage": "jest --coverage --colors"
   },
   "keywords": [],
-  "author": "",
+  "author": "Brendan McCaughey",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.4.3",
@@ -23,6 +23,7 @@
     "next": "^9.0.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-table": "^7.0.0-rc.16",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {

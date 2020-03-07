@@ -2,9 +2,9 @@ import fetch from "isomorphic-unfetch";
 import Head from "next/head";
 import Layout from "../../components/Layout";
 import Hero from "../../components/Hero";
-import Nav from "../../components/Navbar";
+import NavBar from "../../components/NavBar";
+import Container from "../../components/Container";
 import parse from "html-react-parser";
-import { Container } from "@material-ui/core";
 
 const Spell = ({ spell }) => {
   console.log(spell);
@@ -34,8 +34,8 @@ const Spell = ({ spell }) => {
         <title>Dungeons and Dragons Spellbook | {name}</title>
       </Head>
       <Layout>
-        <Nav title="Dungeons and Dragons Spellbook" />
-        <Container maxWidth="md">
+        <NavBar title={"D&D Spellbook"} />
+        <Container>
           <h1>{name}</h1>
           <p>
             <i>

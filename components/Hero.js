@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import PropTypes from "prop-types";
 
 const HeroDiv = Styled.div`
         background-image: ${props => `url(${props.image})`};
@@ -24,4 +25,10 @@ const Hero = ({ title, subtitle, image }) => (
     <h3>{subtitle}</h3>
   </HeroDiv>
 );
+
+Hero.PropTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string
+};
+
 export default Hero;

@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import PropTypes from "prop-types";
 
 const NavBar = Styled.div`
     width: 100%;
@@ -24,6 +25,10 @@ const Nav = ({ title }) => {
       <h1>{title}</h1>
     </NavBar>
   );
+};
+
+Nav.PropTypes = {
+  title: PropTypes.string
 };
 
 export default Nav;
