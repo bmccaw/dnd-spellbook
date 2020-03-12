@@ -167,22 +167,18 @@ const Table = ({ columns, data }) => {
 
 const App = ({ tableData }) => {
   const data = tableData;
-  console.log({ data });
-  console.log(data[3].name);
+
   const columns = [
     {
       Header: "Name",
       accessor: "name",
       Filter: SelectColumnFilter,
       filter: "includes",
-      Cell: ({ row }) => {
-        console.log(row);
-        return (
-          <Link href={`/spell/{[id]}`} as={`spell/${row.original._id}`}>
-            <a target="_blank">{row.original.name}</a>
-          </Link>
-        );
-      }
+      Cell: ({ row }) => (
+        <Link href={`/spell/{[id]}`} as={`spell/${row.original._id}`}>
+          <a target="_blank">{row.original.name}</a>
+        </Link>
+      )
     },
     {
       Header: "Level",
