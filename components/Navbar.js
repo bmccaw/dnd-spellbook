@@ -27,7 +27,7 @@ const Nav = ({ title }) => {
   );
 };
 
-Nav.PropTypes = {
+Nav.propTypes = {
   title: PropTypes.string
 };
 

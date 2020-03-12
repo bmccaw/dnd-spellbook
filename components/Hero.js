@@ -26,7 +26,7 @@ const Hero = ({ title, subtitle, image }) => (
   </HeroDiv>
 );
 
-Hero.PropTypes = {
+Hero.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string
 };

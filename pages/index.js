@@ -31,10 +31,13 @@ Index.getInitialProps = async () => {
   const data = await res.json();
 
   console.log(`Showing data fetched. Count: ${data.length}`);
-
-  return {
-    data: data
-  };
+  try {
+    return {
+      data: data
+    };
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export default Index;

@@ -4,11 +4,12 @@ import { ServerStyleSheet } from "styled-components";
 import { ServerStyleSheets } from "@material-ui/styles";
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx, req, res) {
     const styledComponentsSheet = new ServerStyleSheet();
     const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
-
+    console.log("Request", req);
+    console.log("Resolution", res);
     try {
       ctx.renderPage = () =>
         originalRenderPage({
@@ -28,6 +29,8 @@ class MyDocument extends Document {
           </React.Fragment>
         )
       };
+    } catch (error) {
+      console.error(error);
     } finally {
       styledComponentsSheet.seal();
     }
