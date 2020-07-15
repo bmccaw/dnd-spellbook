@@ -33,10 +33,10 @@ const Styles = Styled.div`
 
 // Define a default UI for filtering
 // This will be used for the search bar
-function GlobalFilter({
+function GlobalSearch({
   preGlobalFilteredRows,
   globalFilter,
-  setGlobalFilter
+  setGlobalFilter,
 }) {
   const count = preGlobalFilteredRows.length;
 
@@ -45,29 +45,48 @@ function GlobalFilter({
       Search:{" "}
       <input
         value={globalFilter || ""}
-        onChange={e => {
+        onChange={(e) => {
           setGlobalFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
         }}
-        placeholder={`${count} records...`}
+        placeholder={`${count} spells...`}
         style={{
           fontSize: "1.1rem",
-          border: "0"
+          border: "0",
         }}
       />
     </span>
   );
 }
 
+// function GlobalClassFilter({
+//   preGlobalFilteredRows,
+//   globalFilter,
+//   setGlobalFilter
+// }) {
+//   const classArr = [
+//     "Bard",
+//     "Cleric",
+//     "Druid",
+//     "Fighter",
+//     "Paladin",
+//     "Ranger",
+//     "Sorceror",
+//     "Warlock",
+//     "Wizard"
+//   ];
+//   {map(classArr = > <button>{option}</button>;
+// }
+
 // This is a custom filter UI for selecting
 // a unique option from a list
 function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id }
+  column: { filterValue, setFilter, preFilteredRows, id },
 }) {
   // Calculate the options for filtering
   // using the preFilteredRows
   const options = React.useMemo(() => {
     const options = new Set();
-    preFilteredRows.forEach(row => {
+    preFilteredRows.forEach((row) => {
       options.add(row.values[id]);
     });
     return [...options.values()];
@@ -77,7 +96,7 @@ function SelectColumnFilter({
   return (
     <select
       value={filterValue}
-      onChange={e => {
+      onChange={(e) => {
         setFilter(e.target.value || undefined);
       }}
     >
@@ -101,15 +120,15 @@ const Table = ({ columns, data }) => {
     state,
     visibleColumns,
     preGlobalFilteredRows,
-    setGlobalFilter
+    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
       initialState: {
-        sortBy: [{ id: "name", desc: false }]
+        sortBy: [{ id: "name", desc: false }],
       },
-      disableSortRemove: true
+      disableSortRemove: true,
     },
     useFilters,
     useGlobalFilter,
@@ -123,19 +142,19 @@ const Table = ({ columns, data }) => {
           <th
             colSpan={visibleColumns.length}
             style={{
-              textAlign: "left"
+              textAlign: "left",
             }}
           >
-            <GlobalFilter
+            <GlobalSearch
               preGlobalFilteredRows={preGlobalFilteredRows}
               globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
             />
           </th>
         </tr>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render("Header")}
                 <span>
@@ -154,7 +173,7 @@ const Table = ({ columns, data }) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
+              {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
             </tr>
@@ -166,57 +185,60 @@ const Table = ({ columns, data }) => {
 };
 
 const App = ({ tableData }) => {
-  const data = tableData;
+  const data = React.useMemo(() => tableData, []);
 
-  const columns = [
-    {
-      Header: "Name",
-      accessor: "name",
-      Filter: SelectColumnFilter,
-      filter: "includes",
-      Cell: ({ row }) => (
-        <Link href={`/spell/{[id]}`} as={`spell/${row.original._id}`}>
-          <a target="_blank">{row.original.name}</a>
-        </Link>
-      )
-    },
-    {
-      Header: "Level",
-      accessor: "level",
-      Filter: SelectColumnFilter,
-      filter: "includes"
-    },
-    {
-      Header: "School",
-      accessor: "school",
-      Filter: SelectColumnFilter,
-      filter: "includes"
-    },
-    {
-      Header: "Casting Time",
-      accessor: "casting_time",
-      Filter: SelectColumnFilter,
-      filter: "includes"
-    },
-    {
-      Header: "Ritual",
-      accessor: a => (a.ritual == true ? "Yes" : "No"),
-      Filter: SelectColumnFilter,
-      filter: "includes"
-    },
-    {
-      Header: "Concentration",
-      accessor: a => (a.concentration == true ? "Yes" : "No"),
-      Filter: SelectColumnFilter,
-      filter: "includes"
-    },
-    {
-      Header: "Source",
-      accessor: "source",
-      Filter: SelectColumnFilter,
-      filter: "includes"
-    }
-  ];
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+        Filter: SelectColumnFilter,
+        filter: "includes",
+        Cell: ({ row }) => (
+          <Link href={`/spell/{[id]}`} as={`spell/${row.original._id}`}>
+            <a target="_blank">{row.original.name}</a>
+          </Link>
+        ),
+      },
+      {
+        Header: "Level",
+        accessor: "level",
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+      {
+        Header: "School",
+        accessor: "school",
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+      {
+        Header: "Casting Time",
+        accessor: "casting_time",
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+      {
+        Header: "Ritual",
+        accessor: (a) => (a.ritual == true ? "Yes" : "No"),
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+      {
+        Header: "Concentration",
+        accessor: (a) => (a.concentration == true ? "Yes" : "No"),
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+      {
+        Header: "Source",
+        accessor: "source",
+        Filter: SelectColumnFilter,
+        filter: "includes",
+      },
+    ],
+    []
+  );
 
   return (
     <Styles>

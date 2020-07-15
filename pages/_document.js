@@ -8,8 +8,7 @@ class MyDocument extends Document {
     const styledComponentsSheet = new ServerStyleSheet();
     const materialSheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
-    console.log("Request", req);
-    console.log("Resolution", res);
+
     try {
       ctx.renderPage = () =>
         originalRenderPage({
