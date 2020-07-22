@@ -2,7 +2,6 @@ import fetch from "isomorphic-unfetch";
 import Head from "next/head";
 import Hero from "../components/Hero";
 import Layout from "../components/Layout";
-import SpellTable from "../components/SpellTable";
 import NavBar from "../components/NavBar";
 import App from "../components/Table";
 
@@ -20,7 +19,6 @@ const Index = ({ data }) => {
           image={"/static/images/hero.jpg"}
         />
         <App tableData={data} />
-        {/* <SpellTable data={data} /> */}
       </Layout>
     </>
   );
@@ -33,7 +31,7 @@ Index.getInitialProps = async () => {
   console.log(`Showing data fetched. Count: ${data.length}`);
   try {
     return {
-      data: data
+      data: data,
     };
   } catch (error) {
     console.error(error);

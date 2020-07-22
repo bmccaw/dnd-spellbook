@@ -1,7 +1,14 @@
 import React from "react";
-import { useTable, useSortBy, useFilters, useGlobalFilter } from "react-table";
+import {
+  useTable,
+  useSortBy,
+  useFilters,
+  useGlobalFilter,
+  useRowSelect,
+} from "react-table";
 import Link from "next/link";
 import Styled from "styled-components";
+import createSpellbook from "./createSpellbook";
 
 const Styles = Styled.div`
   table {
@@ -110,6 +117,23 @@ function SelectColumnFilter({
   );
 }
 
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  }
+);
+
 const Table = ({ columns, data }) => {
   const {
     getTableProps,
@@ -117,6 +141,7 @@ const Table = ({ columns, data }) => {
     headerGroups,
     rows,
     prepareRow,
+    selectedFlatRows,
     state,
     visibleColumns,
     preGlobalFilteredRows,
@@ -132,8 +157,37 @@ const Table = ({ columns, data }) => {
     },
     useFilters,
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => {
+        return [
+          {
+            id: "selection",
+            // The header can use the table's getToggleAllRowsSelectedProps method
+            // to render a checkbox
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <div>
+                <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+              </div>
+            ),
+            // The cell can use the individual row's getToggleRowSelectedProps method
+            // to the render a checkbox
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              </div>
+            ),
+          },
+          ...columns,
+        ];
+      });
+    }
   );
+
+  const handleClick = () => {
+    createSpellbook(selectedFlatRows);
+  };
 
   return (
     <table {...getTableProps()}>
@@ -150,6 +204,7 @@ const Table = ({ columns, data }) => {
               globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
             />
+            <button onClick={handleClick}>Create Spellbook</button>
           </th>
         </tr>
         {headerGroups.map((headerGroup) => (

@@ -7,8 +7,6 @@ import Container from "../../components/Container";
 import parse from "html-react-parser";
 
 const Spell = ({ spell }) => {
-  console.log(spell);
-
   const {
     name,
     desc,
@@ -16,14 +14,13 @@ const Spell = ({ spell }) => {
     range,
     ritual,
     duration,
-    concentration,
     casting_time,
     school,
     level_desc,
     component_desc,
     material_desc,
     source,
-    page
+    page,
   } = spell;
 
   const bookLocation = source + ` ` + page;
@@ -70,7 +67,7 @@ const Spell = ({ spell }) => {
   );
 };
 
-Spell.getInitialProps = async context => {
+Spell.getInitialProps = async (context) => {
   const { id } = context.query;
   const res = await fetch(`https://dnd-spell-api.herokuapp.com/spells/${id}`);
   const spell = await res.json();
