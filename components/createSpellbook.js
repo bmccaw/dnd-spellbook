@@ -24,15 +24,26 @@ const createSpellbook = (data) => {
   console.log(formattedData);
   const documentDefinition = {
     content: [
-      "D&D Spellbook",
+      { text: "D&D Spellbook", alignment: "center" },
+      "\n",
       formattedData.map((x) => {
-        return [
-          "\n",
-          { text: x.name },
-          { text: htmlParser(x.desc) },
-          "\n",
-          { text: x.level_desc },
-        ];
+        return {
+          layout: "headerLineOnly",
+          table: {
+            headerRows: 1,
+            widths: ["*", "*"],
+            body: [
+              [{ text: x.name }],
+              [{ text: x.school }],
+              [{ text: `Level: ${x.level}` }],
+              [{ text: `Casting Time: ${x.casting_time}` }],
+              [{ text: `Range: ${x.range}` }],
+              [{ text: `Components: ${x.component_desc}, ${x.material_desc}` }],
+              [{ text: `Duration: ${x.duration}` }],
+              [{ text: htmlParser(x.desc) }],
+            ],
+          },
+        };
       }),
     ],
   };
