@@ -14,7 +14,7 @@ const formatData = (data) => {
 };
 
 function htmlParser(str) {
-  if (str === null || str === "") return false;
+  if (str === null || str === "" || str === undefined) return "";
   else str = str.toString();
   return str.replace(/<[^>]*>/g, "\n");
 }
@@ -25,15 +25,13 @@ const createSpellbook = (data) => {
   const documentDefinition = {
     content: [
       { text: "D&D Spellbook", alignment: "center" },
-      "\n",
       formattedData.map((x) => {
         return {
           layout: "headerLineOnly",
           table: {
-            headerRows: 1,
-            widths: ["*", "*"],
             body: [
-              [{ text: x.name }],
+              ["\n"],
+              [{ text: x.name, bold: true }],
               [{ text: x.school }],
               [{ text: `Level: ${x.level}` }],
               [{ text: `Casting Time: ${x.casting_time}` }],
@@ -41,6 +39,7 @@ const createSpellbook = (data) => {
               [{ text: `Components: ${x.component_desc}, ${x.material_desc}` }],
               [{ text: `Duration: ${x.duration}` }],
               [{ text: htmlParser(x.desc) }],
+              [{ text: htmlParser(x.higher_level) }],
             ],
           },
         };

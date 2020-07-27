@@ -65,25 +65,6 @@ function GlobalSearch({
   );
 }
 
-// function GlobalClassFilter({
-//   preGlobalFilteredRows,
-//   globalFilter,
-//   setGlobalFilter
-// }) {
-//   const classArr = [
-//     "Bard",
-//     "Cleric",
-//     "Druid",
-//     "Fighter",
-//     "Paladin",
-//     "Ranger",
-//     "Sorceror",
-//     "Warlock",
-//     "Wizard"
-//   ];
-//   {map(classArr = > <button>{option}</button>;
-// }
-
 // This is a custom filter UI for selecting
 // a unique option from a list
 function SelectColumnFilter({
@@ -152,6 +133,7 @@ const Table = ({ columns, data }) => {
       data,
       initialState: {
         sortBy: [{ id: "name", desc: false }],
+        hiddenColumns: ["class_desc"],
       },
       disableSortRemove: true,
     },
@@ -290,6 +272,13 @@ const App = ({ tableData }) => {
         accessor: "source",
         Filter: SelectColumnFilter,
         filter: "includes",
+      },
+      {
+        Header: "Class",
+        accessor: "class_desc",
+        Filter: SelectColumnFilter,
+        filter: "includes",
+        show: false,
       },
     ],
     []

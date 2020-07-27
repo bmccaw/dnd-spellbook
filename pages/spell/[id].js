@@ -1,7 +1,6 @@
 import fetch from "isomorphic-unfetch";
 import Head from "next/head";
 import Layout from "../../components/Layout";
-import Hero from "../../components/Hero";
 import NavBar from "../../components/NavBar";
 import Container from "../../components/Container";
 import parse from "html-react-parser";
