@@ -3,6 +3,7 @@ import Head from "next/head";
 import Layout from "../../components/Layout";
 import NavBar from "../../components/NavBar";
 import Container from "../../components/Container";
+import Hero from "../../components/Hero";
 import parse from "html-react-parser";
 
 const Spell = ({ spell }) => {
@@ -31,6 +32,11 @@ const Spell = ({ spell }) => {
       </Head>
       <Layout>
         <NavBar title={"D&D Spellbook"} />
+        <Hero
+          title={"Dungeons and Dragons Spellbook"}
+          subtitle={"The place for all your D&D 5th Edition spell needs!"}
+          image={"/static/images/hero4.jpg"}
+        />
         <Container>
           <h1>{name}</h1>
           <p>

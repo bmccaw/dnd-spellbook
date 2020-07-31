@@ -24,7 +24,7 @@ const createSpellbook = (data) => {
   console.log(formattedData);
   const documentDefinition = {
     content: [
-      { text: "D&D Spellbook", alignment: "center" },
+      { text: "D&D Spellbook", alignment: "center", bold: true },
       formattedData.map((x) => {
         return {
           layout: "headerLineOnly",

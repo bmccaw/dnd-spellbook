@@ -8,11 +8,12 @@ const NavBar = Styled.div`
     top:0;
     display:flex;
     justify-items: center;
-    background-color: #930C10;
+    background-color: #f8f8fa;
     box-shadow:0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22);
-    color:white;
+    color:#F07818;
     margin-bottom: 0;
     font-family: 'Roboto', cursive;
+    text-shadow: 1px 1px rgba(100, 100, 100, 1);
     
     h1 {
       margin-left:20px;
@@ -28,7 +29,7 @@ const Nav = ({ title }) => {
 };
 
 Nav.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 export default Nav;

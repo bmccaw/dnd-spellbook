@@ -12,6 +12,8 @@ import createSpellbook from "./createSpellbook";
 
 const Styles = Styled.div`
   table {
+    font-family: "Roboto";
+    color: #494949;
     width: 100%;
     border-spacing: 0;
     border: 1px solid black;
@@ -24,6 +26,7 @@ const Styles = Styled.div`
     }
     th,
     td {
+      background-color: #f8f8fa;
       margin: 0;
       padding: 1rem;
       border-bottom: 1px solid black;
@@ -35,7 +38,33 @@ const Styles = Styled.div`
   }
   a {
     text-decoration:none;
+    color: #F07818;
+    font-weight: 500;
+    transition: all 0.4s ease 0s;
+    : hover {
+      color: #494949;
+      transition: all 0.4s ease 0s;
+    }
   }
+`;
+
+const StyledButton = Styled.button`
+color: #494949;
+text-transform: uppercase;
+text-decoration: none;
+background: #ffffff;
+padding: 10px;
+margin: 5px;
+border: 2px solid #494949;
+display: inline-block;
+cursor:pointer;
+transition: all 0.4s ease 0s;
+& : hover {
+  color: #ffffff;
+background: #F07818;
+border-color: #F07818;
+transition: all 0.4s ease 0s;
+}
 `;
 
 // Define a default UI for filtering
@@ -64,6 +93,33 @@ function GlobalSearch({
     </span>
   );
 }
+
+const GlobalClassFilter = ({ setGlobalFilter }) => {
+  const classArr = [
+    "Bard",
+    "Cleric",
+    "Druid",
+    "Paladin",
+    "Ranger",
+    "Sorceror",
+    "Warlock",
+    "Wizard",
+  ];
+
+  return classArr.map((val, index) => {
+    return (
+      <StyledButton
+        key={index}
+        value={val}
+        onClick={(e) => {
+          setGlobalFilter(e.target.value || undefined);
+        }}
+      >
+        {val}
+      </StyledButton>
+    );
+  });
+};
 
 // This is a custom filter UI for selecting
 // a unique option from a list
@@ -186,7 +242,8 @@ const Table = ({ columns, data }) => {
               globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
             />
-            <button onClick={handleClick}>Create Spellbook</button>
+            <StyledButton onClick={handleClick}>Create Spellbook</StyledButton>
+            <GlobalClassFilter setGlobalFilter={setGlobalFilter} />
           </th>
         </tr>
         {headerGroups.map((headerGroup) => (

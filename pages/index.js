@@ -16,7 +16,7 @@ const Index = ({ data }) => {
         <Hero
           title={"Dungeons and Dragons Spellbook"}
           subtitle={"The place for all your D&D 5th Edition spell needs!"}
-          image={"/static/images/hero.jpg"}
+          image={"/static/images/hero4.jpg"}
         />
         <App tableData={data} />
       </Layout>

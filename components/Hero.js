@@ -3,9 +3,10 @@ import Styled from "styled-components";
 import PropTypes from "prop-types";
 
 const HeroDiv = Styled.div`
-        background-image: ${props => `url(${props.image})`};
+        background-image: ${(props) => `url(${props.image})`};
         background-attachment: fixed;
-        background-position: center bottom;
+        background-position: top;
+        background-size: cover;
         min-height:500px;
         display: flex;
         justify-content: center;
@@ -28,7 +29,7 @@ const Hero = ({ title, subtitle, image }) => (
 
 Hero.propTypes = {
   title: PropTypes.string,
-  subtitle: PropTypes.string
+  subtitle: PropTypes.string,
 };
 
 export default Hero;
