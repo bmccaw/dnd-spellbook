@@ -23,7 +23,19 @@ const Spell = ({ spell }) => {
     page,
   } = spell;
 
-  const bookLocation = source + ` ` + page;
+  const convertToTitle = (source) => {
+    if (source === "PHB") {
+      return "Player's Handbook";
+    } else if (source === "EE PC") {
+      return "Elemental Evil Player's Companion";
+    } else if (source === "SCAG") {
+      return "Sword Coast Adventurer's Guide";
+    } else if (source === "UA TOBM") {
+      return "Unearthed Arcana: That Old Black Magic";
+    }
+  };
+
+  const bookLocation = convertToTitle(source) + `, page ` + page;
 
   return (
     <>

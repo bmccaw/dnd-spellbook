@@ -13,7 +13,7 @@ const NavBar = Styled.div`
     color:#F07818;
     margin-bottom: 0;
     font-family: 'Roboto', cursive;
-    text-shadow: 1px 1px rgba(100, 100, 100, 1);
+    // text-shadow: 1px 1px rgba(100, 100, 100, 1);
     
     h1 {
       margin-left:20px;

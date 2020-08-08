@@ -15,8 +15,6 @@
   "author": "Brendan McCaughey",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/core": "^4.4.3",
-    "@material-ui/icons": "^4.9.1",
     "babel-plugin-styled-components": "^1.10.6",
     "html-react-parser": "^0.10.1",
     "isomorphic-unfetch": "^3.0.0",

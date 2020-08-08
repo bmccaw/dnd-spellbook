@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useTable,
   useSortBy,
@@ -16,24 +16,23 @@ const Styles = Styled.div`
     color: #494949;
     width: 100%;
     border-spacing: 0;
-    border: 1px solid black;
     tr {
-      :last-child {
-        td {
-          border-bottom: 0;
+      :nth-of-type(odd) {
+        td{
+        background: #e6e6e6;
         }
       }
+    }
+    thead th {
+      position: sticky;
+      top:0px;
     }
     th,
     td {
       background-color: #f8f8fa;
       margin: 0;
       padding: 1rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-      :last-child {
-        border-right: 0;
-      }
+      text-align: left;
     }
   }
   a {
@@ -101,7 +100,7 @@ const GlobalClassFilter = ({ setGlobalFilter }) => {
     "Druid",
     "Paladin",
     "Ranger",
-    "Sorceror",
+    "Sorcerer",
     "Warlock",
     "Wizard",
   ];
@@ -223,20 +222,28 @@ const Table = ({ columns, data }) => {
     }
   );
 
+  useEffect(() => {
+    const tableHeaderTop = document
+      .querySelector(".sticky-table thead")
+      .getBoundingClientRect().top;
+    const ths = document.querySelectorAll(".sticky-table thead th");
+    // const nav = document.querySelector(".nav").getBoundingClientRect().top;
+
+    for (let i = 0; i < ths.length; i++) {
+      const th = ths[i];
+      th.style.top = th.getBoundingClientRect().top - tableHeaderTop + "px";
+    }
+  }, []);
+
   const handleClick = () => {
     createSpellbook(selectedFlatRows);
   };
 
   return (
-    <table {...getTableProps()}>
+    <table className="sticky-table" {...getTableProps()}>
       <thead>
         <tr>
-          <th
-            colSpan={visibleColumns.length}
-            style={{
-              textAlign: "left",
-            }}
-          >
+          <th colSpan={visibleColumns.length}>
             <GlobalSearch
               preGlobalFilteredRows={preGlobalFilteredRows}
               globalFilter={state.globalFilter}
@@ -255,7 +262,7 @@ const Table = ({ columns, data }) => {
                   {/* Replace 'v's' with real icons */}
                   {/* {column.isSorted ? (column.isSortedDesc ? " v" : " ^") : ""} */}
                 </span>
-                {/* Select filters keep causing getInitialProps error */}
+                {/* Isn't playing nice with GlobalSearch */}
                 {/* <div>{column.canFilter ? column.render("Filter") : null}</div> */}
               </th>
             ))}
@@ -266,7 +273,7 @@ const Table = ({ columns, data }) => {
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr key={i} {...row.getRowProps()}>
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
@@ -288,6 +295,7 @@ const App = ({ tableData }) => {
         accessor: "name",
         Filter: SelectColumnFilter,
         filter: "includes",
+        disableFilters: true,
         Cell: ({ row }) => (
           <Link href={`/spell/{[id]}`} as={`spell/${row.original._id}`}>
             <a target="_blank">{row.original.name}</a>
