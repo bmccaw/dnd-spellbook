@@ -15,6 +15,7 @@
   "author": "Brendan McCaughey",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.10.4",
     "babel-plugin-styled-components": "^1.10.6",
     "html-react-parser": "^0.10.1",
     "isomorphic-unfetch": "^3.0.0",
@@ -28,6 +29,8 @@
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.1",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
     "eslint": "^6.3.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",

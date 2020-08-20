@@ -5,6 +5,7 @@ import {
   useFilters,
   useGlobalFilter,
   useRowSelect,
+  useAsyncDebounce,
 } from "react-table";
 import Link from "next/link";
 import Styled from "styled-components";
@@ -48,13 +49,14 @@ const Styles = Styled.div`
 `;
 
 const StyledButton = Styled.button`
-color: #494949;
+color: ${({ active }) => (active ? "#ffffff" : "#494949")};
 text-transform: uppercase;
 text-decoration: none;
-background: #ffffff;
+background: ${({ active }) => (active ? "#F07818" : "#ffffff")};
 padding: 10px;
 margin: 5px;
-border: 2px solid #494949;
+border: 2px solid;
+border-color: ${({ active }) => (active ? "#F07818" : "#494949")} ;
 display: inline-block;
 cursor:pointer;
 transition: all 0.4s ease 0s;
@@ -68,22 +70,21 @@ transition: all 0.4s ease 0s;
 
 // Define a default UI for filtering
 // This will be used for the search bar
-function GlobalSearch({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
-  const count = preGlobalFilteredRows.length;
+const GlobalSearch = ({ globalFilter, setGlobalFilter }) => {
+  const [value, setValue] = React.useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined); // Set undefined to remove the filter entirely
+  }, 200);
 
   return (
     <span>
       Search:{" "}
       <input
-        value={globalFilter || ""}
+        value={value || ""}
         onChange={(e) => {
-          setGlobalFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+          setValue(e.target.value);
+          onChange(e.target.value);
         }}
-        placeholder={`${count} spells...`}
         style={{
           fontSize: "1.1rem",
           border: "0",
@@ -91,30 +92,63 @@ function GlobalSearch({
       />
     </span>
   );
-}
+};
 
 const GlobalClassFilter = ({ setGlobalFilter }) => {
   const classArr = [
-    "Bard",
-    "Cleric",
-    "Druid",
-    "Paladin",
-    "Ranger",
-    "Sorcerer",
-    "Warlock",
-    "Wizard",
+    {
+      id: 1,
+      title: "Bard",
+    },
+    {
+      id: 2,
+      title: "Cleric",
+    },
+    {
+      id: 3,
+      title: "Druid",
+    },
+    {
+      id: 4,
+      title: "Paladin",
+    },
+    {
+      id: 5,
+      title: "Ranger",
+    },
+    {
+      id: 6,
+      title: "Sorcerer",
+    },
+    {
+      id: 7,
+      title: "Warlock",
+    },
+    {
+      id: 8,
+      title: "Wizard",
+    },
   ];
+  const [active, setActive] = React.useState(null);
 
-  return classArr.map((val, index) => {
+  return classArr.map((val) => {
     return (
       <StyledButton
-        key={index}
-        value={val}
+        key={val.id}
+        value={val.title}
+        active={val.title === active}
+        id={val.id}
         onClick={(e) => {
-          setGlobalFilter(e.target.value || undefined);
+          if (active === val.title) {
+            setActive(null);
+            setGlobalFilter("" || undefined);
+          } else {
+            setActive(e.target.value);
+            setGlobalFilter(e.target.value || undefined);
+          }
         }}
       >
-        {val}
+        {val.title}
       </StyledButton>
     );
   });
@@ -122,9 +156,9 @@ const GlobalClassFilter = ({ setGlobalFilter }) => {
 
 // This is a custom filter UI for selecting
 // a unique option from a list
-function SelectColumnFilter({
+const SelectColumnFilter = ({
   column: { filterValue, setFilter, preFilteredRows, id },
-}) {
+}) => {
   // Calculate the options for filtering
   // using the preFilteredRows
   const options = React.useMemo(() => {
@@ -134,6 +168,8 @@ function SelectColumnFilter({
     });
     return [...options.values()];
   }, [id, preFilteredRows]);
+
+  options.sort();
 
   // Render a multi-select box
   return (
@@ -151,7 +187,7 @@ function SelectColumnFilter({
       ))}
     </select>
   );
-}
+};
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -192,8 +228,8 @@ const Table = ({ columns, data }) => {
       },
       disableSortRemove: true,
     },
-    useFilters,
     useGlobalFilter,
+    useFilters,
     useSortBy,
     useRowSelect,
     (hooks) => {
@@ -255,15 +291,22 @@ const Table = ({ columns, data }) => {
         </tr>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render("Header")}
-                <span>
-                  {/* Replace 'v's' with real icons */}
-                  {/* {column.isSorted ? (column.isSortedDesc ? " v" : " ^") : ""} */}
+            {headerGroup.headers.map((column, index) => (
+              <th key={index}>
+                <span {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}{" "}
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <i className="fa fa-chevron-down" aria-hidden="true"></i>
+                    ) : (
+                      <i className="fa fa-chevron-up" aria-hidden="true"></i>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </span>
-                {/* Isn't playing nice with GlobalSearch */}
-                {/* <div>{column.canFilter ? column.render("Filter") : null}</div> */}
+                {/* Isn't playing nice with GlobalSearch. Only seems to work when used before GlobalFilter */}
+                <div>{column.canFilter ? column.render("Filter") : null}</div>
               </th>
             ))}
           </tr>
@@ -304,7 +347,7 @@ const App = ({ tableData }) => {
       },
       {
         Header: "Level",
-        accessor: "level",
+        accessor: (spell) => String(spell.level),
         Filter: SelectColumnFilter,
         filter: "includes",
       },
