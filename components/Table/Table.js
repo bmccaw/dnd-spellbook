@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, forwardRef, useMemo } from "react";
 import {
   useTable,
   useSortBy,
   useFilters,
   useGlobalFilter,
   useRowSelect,
-  useAsyncDebounce,
 } from "react-table";
+import GlobalSearch from "../Table/GlobalSearch";
+import GlobalClassFilter from "../Table/GlobalClassFilter";
+import SelectColumnFilter from "../Table/SelectColumnFilter";
+import StyledButton from "../StyledButton";
 import Link from "next/link";
 import Styled from "styled-components";
-import createSpellbook from "./createSpellbook";
+import createSpellbook from "../createSpellbook";
 
 const Styles = Styled.div`
   table {
@@ -48,163 +51,20 @@ const Styles = Styled.div`
   }
 `;
 
-const StyledButton = Styled.button`
-color: ${({ active }) => (active ? "#ffffff" : "#494949")};
-text-transform: uppercase;
-text-decoration: none;
-background: ${({ active }) => (active ? "#F07818" : "#ffffff")};
-padding: 10px;
-margin: 5px;
-border: 2px solid;
-border-color: ${({ active }) => (active ? "#F07818" : "#494949")} ;
-display: inline-block;
-cursor:pointer;
-transition: all 0.4s ease 0s;
-& : hover {
-  color: #ffffff;
-background: #F07818;
-border-color: #F07818;
-transition: all 0.4s ease 0s;
-}
-`;
+const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
+  const defaultRef = useRef();
+  const resolvedRef = ref || defaultRef;
 
-// Define a default UI for filtering
-// This will be used for the search bar
-const GlobalSearch = ({ globalFilter, setGlobalFilter }) => {
-  const [value, setValue] = React.useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
-    setGlobalFilter(value || undefined); // Set undefined to remove the filter entirely
-  }, 200);
+  useEffect(() => {
+    resolvedRef.current.indeterminate = indeterminate;
+  }, [resolvedRef, indeterminate]);
 
   return (
-    <span>
-      Search:{" "}
-      <input
-        value={value || ""}
-        onChange={(e) => {
-          setValue(e.target.value);
-          onChange(e.target.value);
-        }}
-        style={{
-          fontSize: "1.1rem",
-          border: "0",
-        }}
-      />
-    </span>
+    <>
+      <input type="checkbox" ref={resolvedRef} {...rest} />
+    </>
   );
-};
-
-const GlobalClassFilter = ({ setGlobalFilter }) => {
-  const classArr = [
-    {
-      id: 1,
-      title: "Bard",
-    },
-    {
-      id: 2,
-      title: "Cleric",
-    },
-    {
-      id: 3,
-      title: "Druid",
-    },
-    {
-      id: 4,
-      title: "Paladin",
-    },
-    {
-      id: 5,
-      title: "Ranger",
-    },
-    {
-      id: 6,
-      title: "Sorcerer",
-    },
-    {
-      id: 7,
-      title: "Warlock",
-    },
-    {
-      id: 8,
-      title: "Wizard",
-    },
-  ];
-  const [active, setActive] = React.useState(null);
-
-  return classArr.map((val) => {
-    return (
-      <StyledButton
-        key={val.id}
-        value={val.title}
-        active={val.title === active}
-        id={val.id}
-        onClick={(e) => {
-          if (active === val.title) {
-            setActive(null);
-            setGlobalFilter("" || undefined);
-          } else {
-            setActive(e.target.value);
-            setGlobalFilter(e.target.value || undefined);
-          }
-        }}
-      >
-        {val.title}
-      </StyledButton>
-    );
-  });
-};
-
-// This is a custom filter UI for selecting
-// a unique option from a list
-const SelectColumnFilter = ({
-  column: { filterValue, setFilter, preFilteredRows, id },
-}) => {
-  // Calculate the options for filtering
-  // using the preFilteredRows
-  const options = React.useMemo(() => {
-    const options = new Set();
-    preFilteredRows.forEach((row) => {
-      options.add(row.values[id]);
-    });
-    return [...options.values()];
-  }, [id, preFilteredRows]);
-
-  options.sort();
-
-  // Render a multi-select box
-  return (
-    <select
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  );
-};
-
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
-    const resolvedRef = ref || defaultRef;
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate;
-    }, [resolvedRef, indeterminate]);
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    );
-  }
-);
+});
 
 const Table = ({ columns, data }) => {
   const {
@@ -218,6 +78,7 @@ const Table = ({ columns, data }) => {
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
+    setAllFilters,
   } = useTable(
     {
       columns,
@@ -271,7 +132,7 @@ const Table = ({ columns, data }) => {
     }
   }, []);
 
-  const handleClick = () => {
+  const handleSpellbookExport = () => {
     createSpellbook(selectedFlatRows);
   };
 
@@ -285,8 +146,19 @@ const Table = ({ columns, data }) => {
               globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
             />
-            <StyledButton onClick={handleClick}>Create Spellbook</StyledButton>
+            <StyledButton onClick={handleSpellbookExport}>
+              Create Spellbook
+            </StyledButton>
             <GlobalClassFilter setGlobalFilter={setGlobalFilter} />
+            <StyledButton
+              onClick={() => {
+                setAllFilters([]);
+                //TODO move state to Table to fix "active" button
+                // setGlobalFilter("" || undefined);
+              }}
+            >
+              Reset Filters
+            </StyledButton>
           </th>
         </tr>
         {headerGroups.map((headerGroup) => (
@@ -305,7 +177,6 @@ const Table = ({ columns, data }) => {
                     ""
                   )}
                 </span>
-                {/* Isn't playing nice with GlobalSearch. Only seems to work when used before GlobalFilter */}
                 <div>{column.canFilter ? column.render("Filter") : null}</div>
               </th>
             ))}
@@ -329,9 +200,9 @@ const Table = ({ columns, data }) => {
 };
 
 const App = ({ tableData }) => {
-  const data = React.useMemo(() => tableData, []);
+  const data = useMemo(() => tableData, []);
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         Header: "Name",

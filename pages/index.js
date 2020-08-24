@@ -3,7 +3,7 @@ import Head from "next/head";
 import Hero from "../components/Hero";
 import Layout from "../components/Layout";
 import NavBar from "../components/NavBar";
-import App from "../components/Table";
+import App from "../components/Table/Table";
 
 const Index = ({ data }) => {
   return (

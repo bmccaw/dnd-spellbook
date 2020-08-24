@@ -28,6 +28,21 @@ const createSpellbook = (data) => {
           table: {
             body: [
               ["\n"],
+              [
+                {
+                  canvas: [
+                    {
+                      type: "line",
+                      x1: 0,
+                      y1: 10,
+                      x2: 500,
+                      y2: 10,
+                      lineWidth: 2,
+                    },
+                  ],
+                },
+              ],
+              ["\n"],
               [{ text: x.name, bold: true }],
               [{ text: x.school }],
               [{ text: `Level: ${x.level}` }],
