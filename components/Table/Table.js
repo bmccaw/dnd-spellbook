@@ -120,6 +120,7 @@ const Table = ({ columns, data }) => {
   );
 
   useEffect(() => {
+    setAllFilters([]);
     const tableHeaderTop = document
       .querySelector(".sticky-table thead")
       .getBoundingClientRect().top;
